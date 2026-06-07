@@ -1,0 +1,17 @@
+faker
+pandas
+numpy
+plotly
+dash
+dash-bootstrap-components
+scikit-learn
+xgboost
+prophet
+jinja2
+scipy
+statsmodels
+openpyxl
+APScheduler
+matplotlib
+seaborn
+kaleido

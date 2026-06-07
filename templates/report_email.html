@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CredResolve Executive Report - {{ report_date }}</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0d1117; font-family:'Segoe UI',Arial,sans-serif; color:#e0e0e0;">
+
+<div style="max-width:900px; margin:0 auto; background-color:#1a1a2e;">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       1. HEADER BANNER
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="background-color:#0f3460; padding:28px 32px 20px 32px; border-bottom:3px solid #2E86AB;">
+    <table style="width:100%; border-collapse:collapse;">
+      <tr>
+        <td style="vertical-align:middle; width:60%;">
+          <span style="font-size:32px; font-weight:900; color:#ffffff; letter-spacing:-0.5px;">CredResolve</span>
+          <span style="font-size:32px; font-weight:900; color:#2E86AB; letter-spacing:-0.5px;"> Analytics</span>
+          <div style="color:#8ab4c8; font-size:13px; margin-top:4px; letter-spacing:1px; text-transform:uppercase;">
+            SaaS Business Intelligence Platform
+          </div>
+        </td>
+        <td style="vertical-align:middle; text-align:right; width:40%;">
+          <div style="color:#2E86AB; font-size:16px; font-weight:700; letter-spacing:0.5px;">
+            Executive Monthly Report
+          </div>
+          <div style="color:#8ab4c8; font-size:14px; margin-top:6px;">
+            {{ report_date }}
+          </div>
+          <div style="color:#556b7a; font-size:11px; margin-top:4px;">
+            Generated: {{ generated_at }}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       2. EXECUTIVE SUMMARY BAR
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="background-color:#16213e; border-bottom:1px solid #2a2a4a; padding:0;">
+    <table style="width:100%; border-collapse:collapse;">
+      <tr>
+        <td style="width:20%; padding:18px 16px; text-align:center; border-right:1px solid #2a2a4a;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+            Current MRR
+          </div>
+          <div style="color:{{ mrr_color }}; font-size:22px; font-weight:800; line-height:1.1;">
+            {{ mrr_current }}
+          </div>
+          <div style="color:{{ mrr_color }}; font-size:12px; margin-top:4px;">
+            {{ mrr_mom_pct }} MoM
+          </div>
+        </td>
+        <td style="width:20%; padding:18px 16px; text-align:center; border-right:1px solid #2a2a4a;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+            Churn Rate
+          </div>
+          <div style="color:{{ churn_color }}; font-size:22px; font-weight:800; line-height:1.1;">
+            {{ churn_rate }}
+          </div>
+          <div style="color:#556b7a; font-size:11px; margin-top:4px;">Overall customers</div>
+        </td>
+        <td style="width:20%; padding:18px 16px; text-align:center; border-right:1px solid #2a2a4a;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+            Retention Rate
+          </div>
+          <div style="color:{{ retention_color }}; font-size:22px; font-weight:800; line-height:1.1;">
+            {{ retention_rate }}
+          </div>
+          <div style="color:#556b7a; font-size:11px; margin-top:4px;">Customer base</div>
+        </td>
+        <td style="width:20%; padding:18px 16px; text-align:center; border-right:1px solid #2a2a4a;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+            CSAT Score
+          </div>
+          <div style="color:{{ csat_color }}; font-size:22px; font-weight:800; line-height:1.1;">
+            {{ csat_score }} / 5
+          </div>
+          <div style="color:#556b7a; font-size:11px; margin-top:4px;">Customer satisfaction</div>
+        </td>
+        <td style="width:20%; padding:18px 16px; text-align:center;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">
+            Net Rev. Retention
+          </div>
+          <div style="color:{{ nrr_color }}; font-size:22px; font-weight:800; line-height:1.1;">
+            {{ nrr_pct }}
+          </div>
+          <div style="color:#556b7a; font-size:11px; margin-top:4px;">Latest month NRR</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="padding:24px 28px;">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       3. REVENUE & MRR
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    Revenue Performance
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+    <tr>
+      <td style="width:57%; padding-right:12px; vertical-align:top;">
+        {% if mrr_ts_img %}
+        <img src="{{ mrr_ts_img }}" alt="MRR Trend"
+             style="width:100%; max-width:520px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">
+          MRR Trend chart unavailable
+        </div>
+        {% endif %}
+      </td>
+      <td style="width:43%; padding-left:4px; vertical-align:top;">
+        {% if revenue_pie_img %}
+        <img src="{{ revenue_pie_img }}" alt="Revenue by Segment"
+             style="width:100%; max-width:380px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">
+          Revenue chart unavailable
+        </div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <!-- Revenue quick stats pills -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:24px;">
+    <tr>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:20px; padding:10px 18px; display:inline-block; min-width:160px;">
+          <span style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Total Revenue</span>
+          <div style="color:#e0e0e0; font-size:16px; font-weight:700; margin-top:3px;">{{ total_revenue }}</div>
+        </div>
+      </td>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:20px; padding:10px 18px; display:inline-block; min-width:160px;">
+          <span style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Avg Rev / Customer</span>
+          <div style="color:#e0e0e0; font-size:16px; font-weight:700; margin-top:3px;">{{ avg_revenue_per_customer }}</div>
+        </div>
+      </td>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:20px; padding:10px 18px; display:inline-block; min-width:160px;">
+          <span style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">YTD Growth</span>
+          <div style="color:{{ ytd_color }}; font-size:16px; font-weight:700; margin-top:3px;">{{ ytd_growth }}</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       4. CHURN & RETENTION
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    Churn &amp; Retention
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-bottom:14px;">
+    <tr>
+      <td style="width:50%; padding-right:10px; vertical-align:top;">
+        {% if churn_segment_img %}
+        <img src="{{ churn_segment_img }}" alt="Churn by Segment"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+      <td style="width:50%; padding-left:6px; vertical-align:top;">
+        {% if cohort_img %}
+        <img src="{{ cohort_img }}" alt="Cohort Heatmap"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <!-- SMB Churn callout -->
+  <div style="background-color:#2d1a00; border-left:4px solid #FFC107; border-radius:0 6px 6px 0; padding:12px 18px; margin-bottom:26px;">
+    <span style="color:#FFC107; font-weight:700; font-size:14px;">
+      &#9888; SMB churn at 30.2% requires immediate attention — highest churn rate across all segments.
+    </span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       5. ACTIONABLE INSIGHTS
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    Key Insights &amp; Recommendations
+  </div>
+
+  <!-- Row 1: Insights 1 & 2 -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:12px;">
+    <tr>
+      <td style="width:50%; padding-right:8px; vertical-align:top;">
+        <div style="background-color:#16213e; border-left:4px solid #DC3545; border-radius:0 8px 8px 0; padding:16px 18px; height:100%; box-sizing:border-box;">
+          <div style="display:inline-block; background-color:#DC3545; color:#fff; font-size:11px; font-weight:800;
+                      width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; margin-bottom:10px;">
+            1
+          </div>
+          <div style="color:#e0e0e0; font-size:13px; line-height:1.6;">
+            <strong>{{ insight_1.split(".")[0] }}.</strong>
+            {{ insight_1[insight_1.index(".")+1:] if "." in insight_1 else "" }}
+          </div>
+        </div>
+      </td>
+      <td style="width:50%; padding-left:8px; vertical-align:top;">
+        <div style="background-color:#16213e; border-left:4px solid #DC3545; border-radius:0 8px 8px 0; padding:16px 18px; height:100%; box-sizing:border-box;">
+          <div style="display:inline-block; background-color:#DC3545; color:#fff; font-size:11px; font-weight:800;
+                      width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; margin-bottom:10px;">
+            2
+          </div>
+          <div style="color:#e0e0e0; font-size:13px; line-height:1.6;">
+            <strong>{{ insight_2.split(".")[0] }}.</strong>
+            {{ insight_2[insight_2.index(".")+1:] if "." in insight_2 else "" }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Row 2: Insights 3 & 4 -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:12px;">
+    <tr>
+      <td style="width:50%; padding-right:8px; vertical-align:top;">
+        <div style="background-color:#16213e; border-left:4px solid #FFC107; border-radius:0 8px 8px 0; padding:16px 18px; height:100%; box-sizing:border-box;">
+          <div style="display:inline-block; background-color:#FFC107; color:#000; font-size:11px; font-weight:800;
+                      width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; margin-bottom:10px;">
+            3
+          </div>
+          <div style="color:#e0e0e0; font-size:13px; line-height:1.6;">
+            <strong>{{ insight_3.split(".")[0] }}.</strong>
+            {{ insight_3[insight_3.index(".")+1:] if "." in insight_3 else "" }}
+          </div>
+        </div>
+      </td>
+      <td style="width:50%; padding-left:8px; vertical-align:top;">
+        <div style="background-color:#16213e; border-left:4px solid #FFC107; border-radius:0 8px 8px 0; padding:16px 18px; height:100%; box-sizing:border-box;">
+          <div style="display:inline-block; background-color:#FFC107; color:#000; font-size:11px; font-weight:800;
+                      width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; margin-bottom:10px;">
+            4
+          </div>
+          <div style="color:#e0e0e0; font-size:13px; line-height:1.6;">
+            <strong>{{ insight_4.split(".")[0] }}.</strong>
+            {{ insight_4[insight_4.index(".")+1:] if "." in insight_4 else "" }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Row 3: Insight 5 (full width) -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:26px;">
+    <tr>
+      <td style="vertical-align:top;">
+        <div style="background-color:#16213e; border-left:4px solid #2E86AB; border-radius:0 8px 8px 0; padding:16px 18px;">
+          <div style="display:inline-block; background-color:#2E86AB; color:#fff; font-size:11px; font-weight:800;
+                      width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; margin-bottom:10px;">
+            5
+          </div>
+          <div style="color:#e0e0e0; font-size:13px; line-height:1.6;">
+            <strong>{{ insight_5.split(".")[0] }}.</strong>
+            {{ insight_5[insight_5.index(".")+1:] if "." in insight_5 else "" }}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       6. MARKETING PERFORMANCE
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    Marketing Campaigns
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-bottom:14px;">
+    <tr>
+      <td style="width:50%; padding-right:10px; vertical-align:top;">
+        {% if campaign_roi_img %}
+        <img src="{{ campaign_roi_img }}" alt="Campaign ROI by Channel"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+      <td style="width:50%; padding-left:6px; vertical-align:top;">
+        {% if funnel_img %}
+        <img src="{{ funnel_img }}" alt="Marketing Funnel"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <!-- Best channel callout -->
+  <div style="background-color:#0d2a1a; border-left:4px solid #28A745; border-radius:0 6px 6px 0; padding:12px 18px; margin-bottom:26px;">
+    <span style="color:#28A745; font-weight:700; font-size:14px;">
+      &#10003; Best performing channel: {{ best_channel }}
+    </span>
+    <span style="color:#8ab4c8; font-size:14px; margin-left:16px;">
+      | &nbsp;Avg Campaign ROI: {{ avg_roi }}
+    </span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       7. CUSTOMER HEALTH
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    At-Risk Customer Summary
+  </div>
+
+  <!-- Risk stat boxes -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+    <tr>
+      <td style="width:50%; padding-right:8px;">
+        <div style="background-color:#3d1010; border:1px solid #DC3545; border-radius:8px; padding:18px 22px; text-align:center;">
+          <div style="color:#DC3545; font-size:28px; font-weight:900;">{{ high_risk_count }}</div>
+          <div style="color:#e0e0e0; font-size:15px; font-weight:700; margin:4px 0;">High-Risk Customers</div>
+          <div style="color:#ff9999; font-size:13px; margin-top:6px;">{{ revenue_at_risk }} revenue at stake</div>
+        </div>
+      </td>
+      <td style="width:50%; padding-left:8px;">
+        <div style="background-color:#1f0808; border:1px solid #8b0000; border-radius:8px; padding:18px 22px; text-align:center;">
+          <div style="color:#ff4444; font-size:28px; font-weight:900;">{{ critical_risk_count }}</div>
+          <div style="color:#e0e0e0; font-size:15px; font-weight:700; margin:4px 0;">Critical Risk Customers</div>
+          <div style="color:#cc6666; font-size:13px; margin-top:6px;">Immediate outreach required</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- High-risk table -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:26px; font-size:12px;">
+    <thead>
+      <tr style="background-color:#0a0a1a;">
+        <th style="padding:10px 12px; text-align:left; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Customer ID</th>
+        <th style="padding:10px 12px; text-align:left; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Segment</th>
+        <th style="padding:10px 12px; text-align:left; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Region</th>
+        <th style="padding:10px 12px; text-align:left; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Plan</th>
+        <th style="padding:10px 12px; text-align:center; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Risk Score</th>
+        <th style="padding:10px 12px; text-align:center; color:#8ab4c8; font-weight:700; letter-spacing:0.5px; border-bottom:2px solid #2E86AB;">Risk Tier</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in high_risk_table %}
+      <tr style="background-color:{% if loop.index0 % 2 == 0 %}#16213e{% else %}#0d1b2e{% endif %};">
+        <td style="padding:9px 12px; color:#c0d4e0; border-bottom:1px solid #2a2a4a; font-family:monospace;">{{ row.customer_id }}</td>
+        <td style="padding:9px 12px; color:#e0e0e0; border-bottom:1px solid #2a2a4a;">{{ row.segment }}</td>
+        <td style="padding:9px 12px; color:#e0e0e0; border-bottom:1px solid #2a2a4a;">{{ row.region }}</td>
+        <td style="padding:9px 12px; color:#e0e0e0; border-bottom:1px solid #2a2a4a;">{{ row.plan_type }}</td>
+        <td style="padding:9px 12px; text-align:center; color:#e0e0e0; border-bottom:1px solid #2a2a4a; font-weight:700;">{{ row.churn_risk_score }}</td>
+        <td style="padding:9px 12px; text-align:center; border-bottom:1px solid #2a2a4a; font-weight:700;
+            color:{% if row.risk_tier == 'Critical' %}#DC3545{% elif row.risk_tier == 'High' %}#FFC107{% else %}#ffd700{% endif %};">
+          {{ row.risk_tier }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       8. SUPPORT & PRODUCT
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="color:#2E86AB; font-size:18px; font-weight:700; margin:8px 0 14px 0; border-bottom:1px solid #2E86AB; padding-bottom:7px;">
+    Support &amp; Product Usage
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; margin-bottom:14px;">
+    <tr>
+      <td style="width:50%; padding-right:10px; vertical-align:top;">
+        {% if csat_img %}
+        <img src="{{ csat_img }}" alt="CSAT Trend"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+      <td style="width:50%; padding-left:6px; vertical-align:top;">
+        {% if feature_adoption_img %}
+        <img src="{{ feature_adoption_img }}" alt="Feature Adoption"
+             style="width:100%; max-width:440px; border-radius:8px; display:block; border:1px solid #2a2a4a;">
+        {% else %}
+        <div style="background:#16213e; border:1px dashed #444; border-radius:8px; padding:40px; text-align:center; color:#556b7a;">Chart unavailable</div>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  <!-- Support quick stats -->
+  <table style="width:100%; border-collapse:collapse; margin-bottom:28px;">
+    <tr>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:8px; padding:14px 10px;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Avg Resolution Time</div>
+          <div style="color:#FFC107; font-size:20px; font-weight:800; margin-top:6px;">{{ avg_resolution_hrs }} hrs</div>
+        </div>
+      </td>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:8px; padding:14px 10px;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">Open Tickets</div>
+          <div style="color:#DC3545; font-size:20px; font-weight:800; margin-top:6px;">{{ open_tickets }}</div>
+        </div>
+      </td>
+      <td style="width:33%; text-align:center; padding:12px 8px;">
+        <div style="background-color:#16213e; border:1px solid #2a2a4a; border-radius:8px; padding:14px 10px;">
+          <div style="color:#8ab4c8; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">CSAT Score</div>
+          <div style="color:{{ csat_color }}; font-size:20px; font-weight:800; margin-top:6px;">{{ csat_score }} / 5.00</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  </div><!-- end inner padding div -->
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       9. FOOTER
+  ════════════════════════════════════════════════════════════════════════ -->
+  <div style="background-color:#0f3460; border-top:2px solid #2E86AB; padding:20px 32px; text-align:center;">
+    <div style="color:#e0e0e0; font-size:13px; font-weight:600; margin-bottom:6px;">
+      Generated by CredResolve Analytics Platform
+    </div>
+    <div style="color:#8ab4c8; font-size:12px; margin-bottom:6px;">
+      {{ generated_at }}
+    </div>
+    <div style="color:#556b7a; font-size:11px;">
+      This report is auto-generated. For questions contact
+      <span style="color:#2E86AB;">analytics@credresolve.com</span>
+    </div>
+  </div>
+
+</div><!-- end max-width wrapper -->
+</body>
+</html>

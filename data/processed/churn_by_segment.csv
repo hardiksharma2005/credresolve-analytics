@@ -1,0 +1,4 @@
+segment,total_customers,churned_customers,churn_rate_pct
+Enterprise,1548,136,8.79
+Mid-Market,3008,555,18.45
+SMB,5444,1645,30.22

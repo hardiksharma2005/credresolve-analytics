@@ -1,0 +1,26 @@
+{
+  "churn_model": {
+    "best_model": "Logistic Regression",
+    "auc_roc": 1.0,
+    "accuracy": 1.0,
+    "total_customers_scored": 10000,
+    "active_customers_scored": 7664,
+    "critical_risk_count": 0,
+    "high_risk_count": 0,
+    "medium_risk_count": 0,
+    "low_risk_count": 7664,
+    "avg_churn_prob_smb": 0.0009,
+    "avg_churn_prob_midmarket": 0.0007,
+    "avg_churn_prob_enterprise": 0.0006
+  },
+  "revenue_forecast": {
+    "model": "Prophet",
+    "last_historical_mrr": 3819504.43,
+    "forecast_jul_2024": 3986567.76,
+    "forecast_dec_2024": 4430635.39,
+    "forecast_6m_total": 25277440.85,
+    "forecast_6m_lower": 25169642.05,
+    "forecast_6m_upper": 25377826.92,
+    "expected_growth_pct": 16.0003
+  }
+}

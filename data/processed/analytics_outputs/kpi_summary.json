@@ -1,0 +1,51 @@
+{
+  "report_date": "2024-06-01",
+  "mrr": {
+    "current": 3819504.43,
+    "previous": 3825874.79,
+    "mom_change_pct": -0.1665,
+    "ytd_growth_pct": 11.3215,
+    "3m_rolling_avg": 3786267.75
+  },
+  "churn": {
+    "overall_rate_pct": 23.36,
+    "smb_rate_pct": 30.2,
+    "midmarket_rate_pct": 18.5,
+    "enterprise_rate_pct": 8.8,
+    "latest_monthly_rate_pct": 0.0,
+    "mom_change_pct": 0.0
+  },
+  "retention": {
+    "overall_rate_pct": 76.64,
+    "nrr_pct": 99.81,
+    "avg_tenure_days": 1356.7
+  },
+  "revenue": {
+    "total_lifetime": 83443423.22,
+    "avg_revenue_per_customer": 8344.34,
+    "top_20pct_customers_revenue_share": 60.05
+  },
+  "support": {
+    "avg_resolution_hours": 28.81,
+    "avg_csat": 3.63,
+    "open_tickets": 1012,
+    "tickets_last_30_days": 712
+  },
+  "marketing": {
+    "avg_roi_pct": 16992.63,
+    "best_channel": "Content Marketing",
+    "total_conversions": 196943,
+    "total_campaign_revenue": 1170331895.35
+  },
+  "product": {
+    "top_feature": "Dashboard",
+    "top_feature_adoption_pct": 71.2,
+    "avg_features_per_customer": 3.4,
+    "mau_latest": 83
+  },
+  "risk": {
+    "high_risk_customers": 67,
+    "critical_risk_customers": 0,
+    "high_risk_revenue_at_stake": 230550.22
+  }
+}

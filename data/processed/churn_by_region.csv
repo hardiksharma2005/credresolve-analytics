@@ -1,0 +1,6 @@
+region,total_customers,churned_customers,churn_rate_pct
+East,2009,493,24.54
+International,1512,365,24.14
+North,2489,549,22.06
+South,2030,467,23.0
+West,1960,462,23.57
